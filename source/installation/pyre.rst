@@ -2,7 +2,7 @@
 Pyre Installation
 =================
 
-Users should begin by following the :ref:`common` before proceeding to the Pyre's specific instructions below.
+Users should begin by following the :ref:`common` installation instructions before proceeding to the Pyre's specific instructions below.
 
 Python packages
 ---------------

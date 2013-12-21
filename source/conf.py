@@ -16,7 +16,14 @@ import sys, os
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
-# sys.path.insert(0, os.path.abspath('.'))
+nornir_buildmanager_path = os.path.join(os.path.abspath('.'), '..', '..', 'nornir-buildmanager')
+nornir_imageregistration_path = os.path.join(os.path.abspath('.'), '..', '..', 'nornir-imageregistration')
+nornir_shared_path = os.path.join(os.path.abspath('.'), '..', '..', 'nornir-shared')
+nornir_pools_path = os.path.join(os.path.abspath('.'), '..', '..', 'nornir-pools')
+sys.path.insert(0, nornir_buildmanager_path)
+sys.path.insert(0, nornir_imageregistration_path)
+sys.path.insert(0, nornir_shared_path)
+sys.path.insert(0, nornir_pools_path)
 
 # -- General configuration -----------------------------------------------------
 
@@ -25,7 +32,9 @@ import sys, os
 
 # Add any Sphinx extension module names here, as strings. They can be extensions
 # coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
-extensions = ['sphinx.ext.autodoc', 'sphinx.ext.todo']
+extensions = ['sphinx.ext.autodoc',
+              'sphinx.ext.todo',
+              'sphinxarg.ext']
 
 
 # Add any paths that contain templates here, relative to this directory.
@@ -44,7 +53,7 @@ master_doc = u'index'
 
 
 # General information about the project.
-project = u'nornir.github.io'
+project = u'Nornir'
 
 copyright = u'2013, James Anderson'
 
@@ -100,7 +109,7 @@ pygments_style = 'sphinx'
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-html_theme = u'sphinxdoc'
+html_theme = u'agogo'
 
 
 # Theme options are theme-specific and customize the look and feel of a theme

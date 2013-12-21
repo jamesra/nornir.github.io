@@ -34,10 +34,12 @@ Stages are rarely perfectly precise particularly at nm scale resolutions.  Below
 Tile translation
 ................
    
-The Nornir tools first step in registration is to translate the tiles to a closer alignment:
+The Nornir tools first step in registration is to translate the tiles to an optimal initial layout.
 
 .. figure:: JamesRA.024.png
    :scale: 50%
+   
+Nornir uses the phase correlation algorithm for this and all other registrations.  
    
    The translation of tiles results in a much better alignment, but minor distortions in the tiles result in imperfections
    
@@ -87,7 +89,9 @@ Measuring the registration quality is time consuming for large images, so downsa
 Rotation and Translation
 ........................
 
-Sections rarely survive processing without significant distortion.  This can be seen by overlaying the sections after brute force alignment. 
+Sections rarely survive processing without significant distortion.  This can be seen by overlaying the sections after brute force alignment.
+
+This is the most error prone step of volume construction.  Nornir includes a tool, pyre, which allows users to interactively fix the alignment. 
 
 .. figure:: JamesRA.032.png
    :scale: 50%
@@ -102,14 +106,14 @@ As in the mosaics, the solution is to lay a grid of cells over the images and de
 .. figure:: JamesRA.034.png
    :scale: 50%
    
-   Purple lines have been overlaid on the resulting mesh to show the subtle deformations that have been corrected.
+   Stright purple lines have been overlaid onto the yellow mesh to highlight the subtle deformation required.
    
 Volume registration
 ...................
 
 The final step is to map all sections to a single coordinate system.  Nornir designates a section as the "center".  It passes the control points for each slice-to-slice registration through any intermediate transformations between the section and the center.  The result is a mapping that warps a section directly to the volume in a single step.
 
-Sadly there is no image for this.  Figure 2 of the `Viking Viewer for Connectomics`_ paper demonstrates the concept.
+Figure 2 of the `Viking Viewer for Connectomics`_ paper demonstrates the concept.  The modern implementation of Nornir uses radial basis functions to estimate the positions of control points that fall outside the boundaries of a mesh.
 
 .. _Viking Viewer for Connectomics: http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3017751/
 

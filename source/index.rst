@@ -11,10 +11,12 @@ Contents:
 .. toctree::
    :maxdepth: 2
    
-   Background <background>
+   Overview <overview/overview>
    Installation <installation/toctree>
    Use <usage/buildmanager>
+   Packages <packages/packages>
    TroubleShooting <troubleshooting>
+   Glossary and Background <background/background>
    
    
 

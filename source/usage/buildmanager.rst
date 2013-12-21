@@ -23,7 +23,7 @@ The convention nornir uses is for a directory to exist for the volume with a num
 ``<experimentfolder>/<section#>_[sectionname]``
 
 Sometimes it is just useful to organize multiple mosaics into a single volume even though they aren't a 3D volume.  In this case just invent different section numbers for each capture. For example lets say I capture three mosaics in SerialEM (which produces an .idoc meta-data file) for Bob's eggplant and he had some ID #'s he wants to make sure get carried along with the data.
-
+ 
 * Bob
 
   * 0001_EggID4567
