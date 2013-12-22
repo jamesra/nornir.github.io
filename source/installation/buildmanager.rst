@@ -37,13 +37,13 @@ There are many roads to installing the packages.  One of these options should wo
 
    Open a command prompt "cmd.exe" and create a directory to store github code in.  I use _C:\src\git_.    
      1. Change to this directory::
-        cd \src\git
+          cd \src\git
         
      2. Download the source::
-        git pull https://github.com/nornir/nornir-buildmanager.git  
+          git pull https://github.com/nornir/nornir-buildmanager.git  
        
      3. Install the package::
-        python setup.py install
+          python setup.py install
 
 3. Manual Option:
    
