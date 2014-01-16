@@ -1,12 +1,13 @@
 .. Nornir documentation master file, created by
    sphinx-quickstart on Wed Dec 18 12:02:16 2013.
    You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
-
+   contain the root `toctree` directive.  
+  
 Welcome to Nornir's documentation!
 ==================================
 
-Contents:
+Contents
+--------
 
 .. toctree::
    :maxdepth: 2
@@ -18,8 +19,8 @@ Contents:
    TroubleShooting <troubleshooting>
    Glossary and Background <background/background>
    
-   
-
+    
+ 
 About Nornir
 ------------
 
@@ -41,7 +42,7 @@ Analysis of the annotations created by Viking for our existing rabbit connectome
 
 Indices and tables
 ==================
-
+ 
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
@@ -52,3 +53,4 @@ Indices and tables
 .. _scientific computing institute's: http://www.ucnia.org/
 .. _Viking: http://connectomes.utah.edu/
 .. _py-connectome-analysis: https://github.com/jamesra/py-connectome-analysis/wiki
+  

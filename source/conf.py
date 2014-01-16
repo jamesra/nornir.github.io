@@ -20,10 +20,18 @@ nornir_buildmanager_path = os.path.join(os.path.abspath('.'), '..', '..', 'norni
 nornir_imageregistration_path = os.path.join(os.path.abspath('.'), '..', '..', 'nornir-imageregistration')
 nornir_shared_path = os.path.join(os.path.abspath('.'), '..', '..', 'nornir-shared')
 nornir_pools_path = os.path.join(os.path.abspath('.'), '..', '..', 'nornir-pools')
+
+
+
 sys.path.insert(0, nornir_buildmanager_path)
 sys.path.insert(0, nornir_imageregistration_path)
 sys.path.insert(0, nornir_shared_path)
 sys.path.insert(0, nornir_pools_path)
+
+intersphinx_mapping = {'python': ('http://docs.python.org/2.7', None)}
+
+# sphinxarg_path = os.path.join(os.path.abspath('.'), '..', '..', 'sphinx-argparse')
+# sys.path.insert(0, sphinxarg_path)
 
 # -- General configuration -----------------------------------------------------
 
@@ -34,8 +42,9 @@ sys.path.insert(0, nornir_pools_path)
 # coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
 extensions = ['sphinx.ext.autodoc',
               'sphinx.ext.todo',
-              'sphinxarg.ext']
-
+              'sphinx.ext.autosummary',
+              'sphinxarg.ext',
+              'sphinx.ext.intersphinx']
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = [u'_templates']
@@ -109,7 +118,7 @@ pygments_style = 'sphinx'
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-html_theme = u'agogo'
+html_theme = u'default'
 
 
 # Theme options are theme-specific and customize the look and feel of a theme

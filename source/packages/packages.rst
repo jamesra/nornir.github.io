@@ -3,7 +3,7 @@ Packages
 --------
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 3
    
    Build manager (nornir_buildmanager) <nornir_buildmanager>
    Image Registration (nornir_imageregistration) <nornir_imageregistration>

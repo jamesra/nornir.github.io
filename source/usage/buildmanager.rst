@@ -64,55 +64,22 @@ Nornir has an .xml file mapping extensions to importers.  It examines each direc
 Pipelines
 ---------
 
-Nornir defines different pipelines that manipulate the volume.  Pipelines are defined in a pipeline.xml file and can be edited by advanced users.  See the [pipeline page](wiki/pipelines) for full details. 
+Nornir defines different pipelines that manipulate the volume.  Pipelines are defined in a pipeline.xml file and can be edited by advanced users.
 
-Builds tend to have many steps in common.  Below is an outline for the Marc lab process.
+Builds tend to have many steps in common.  The Marc lab builds TEM images with this pipeline:
 
-1. Remove blank tiles
-#. Adjust the contrast
-#. Align the tiles to build a section mosaic
-#. Construct transforms aligning sections to adjacent sections
-#. Add transforms to place sections into the volume
+1. Prune
+#. AdjustContrast
+#. Mosaic
+#. Assemble
+#. MosaicReport
+#. CreateBlobFilter
+#. AlignSections -Downsample 32
+#. RefineSectionAlignment -Downsample 32
+#. RefineSectionAlignment -Downsample 32 16
+#. SliceToVolume
+#. ScaleVolumeTransform 16 -> 1 
 
-A sample implementation can be found in the scripts directory, which is copied to the python scripts directory at setup time.  TEMPrepare, TEMBuildMosaic, and TEMAlign show the commands used to build the RC2 TEM volume at the Marc lab.  
-
-The existing pipelines are likely to be refactored to be more suitable for general use soon.   However they are outlined below.  Running ``nornir_build`` with no arguments will provide a list of all pipelines and their parameters.
-
-1. TEMPrepare: (due for refactoring into prune and histogram pipelines) 
-     Calculates a feature score for each tile in a filter.  Tiles falling below a threshold are removed from the mosaic.  Histograms are calculated for the filter.
-
-#. AdjustContrast:
-    Creates a new filter based on an existing filter. 
-
-#. Mosaic:
-    Aligns tiles into mosaics.  Assembles mosaic images of a requested size.
-
-#. Assemble:
-    Creates assembled images for a filter.  Copies assembled images to an arbitrary output directory.
-
-#. EmailReport:
-    Create a webpage summarizing key attributes of sections in a volume and send the link in E-mail.
-
-#. EmailStosReport:
-    Create a webpage summarizing key attributes of slice-to-volume registrations and send the link in E-mail.
-
-#. CreateBlobFilter:
-    SliceToSlice alignment is sometimes aided by running a form of edge detection on the data.  This creates a "blob" filter for in input filter which can then be passed to slice-to-slice alignment pipelines
-
-#. AlignSections:
-    Aligns mosaics to immediate neighbors using rotation and translation
-
-#. RefineSectionAlignment:
-    Deforms sections aligned with rotation and translation by aligning small local regions within the images.  Produces much more precise alignments.
-
-#. SliceToVolume:
-    Takes a set of slice-to-slice transforms and adds them together to produce slice-to-volume transforms
-
-#. ScaleVolumeTransforms:
-    Mosaics are often too large to align at full resolution.  This pipeline scales the resulting transforms.  For example we may align using downsampled by 16 images and then scale the transforms by a factor of 16 to work with the full-resolution images again.
-
-#. VolumeImage:
-    Produces an image file for a section after being warped into the volume.
-
-#. MosaicToVolume:
-    Passes the mosaic transforms defining how tiles are placed in mosaics through the transform mapping those mosaics into the volume.  The result is mosaic transforms that map tiles directly into the volume.
+Sample batch files can be found in the scripts directory, which is copied to the python scripts directory at setup time.  TEMPrepare, TEMBuildMosaic, and TEMAlign show the commands used to build the RC2 TEM volume at the Marc lab.  
+    
+.. automodule:: nornir_buildmanager 
