@@ -47,6 +47,10 @@ Once downloaded two environment variables must be set.  TESTINPUTPATH and TESTOU
 
   set TESTINPUTPATH=C:\src\git\nornir\testdata
   set TESTOUTPUTPATH=C:\temp
+  
+If one wants to use Viking to examine test volumes after they are built, the TESTHOST environment variable can be set.  You configure your webserver such that the TESTOUTPUTPATH is visible at the URL provided for TESTHOST.
+
+  set TESTHOST=http://localhost/NornirTestOutput
 
 From the nornir-buildmanager directory one can now test the installation by typing::
   

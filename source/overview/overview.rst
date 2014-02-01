@@ -24,7 +24,7 @@ Stage meta-data
 
 Having stage meta-data saves Nornir from needing to calculate the offsets between all tiles and estimating a layout.
 
-Stages are rarely perfectly precise particularly at nm scale resolutions.  Below is an image showing the stage position reported by the JEOL scope at the intersection of four tiles.
+Stages are not perfect.  Below are four overlapping tiles positioned using the stage coordinates reported by the JEOL scope.
 
 .. figure:: JamesRA.020.png
    :scale: 50%
@@ -34,7 +34,7 @@ Stages are rarely perfectly precise particularly at nm scale resolutions.  Below
 Tile translation
 ................
    
-The Nornir tools first step in registration is to translate the tiles to an optimal initial layout.
+The Nornir tools first step in registration is to translate the tiles to an optimal initial layout.  This removes errors in the reported stage position.
 
 .. figure:: JamesRA.024.png
    :scale: 50%
