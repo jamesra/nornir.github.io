@@ -6,6 +6,8 @@
 Welcome to Nornir's documentation!
 ==================================
 
+The repository for Nornir lives at `http://github.com/nornir/`_
+
 Contents
 --------
 
@@ -47,6 +49,7 @@ Indices and tables
 * :ref:`modindex`
 * :ref:`search`
 
+.. _http://github.com/nornir/: http://github.com/nornir/
 .. _rc1: http://www.ncbi.nlm.nih.gov/pubmed/21311605/
 .. _marc lab: http://prometheus.med.utah.edu/~marclab/marclab_09_science-papers.html/
 .. _ncr toolset: http://www.ucnia.org/download/ncrtoolset/
