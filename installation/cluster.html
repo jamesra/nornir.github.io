@@ -1,0 +1,148 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Running on a Cluster &mdash; Nornir 0.9 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.9',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Nornir 0.9 documentation" href="../index.html" />
+    <link rel="up" title="Installation" href="toctree.html" />
+    <link rel="next" title="Using the build manager" href="../usage/buildmanager.html" />
+    <link rel="prev" title="Data Server Setup" href="server.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../usage/buildmanager.html" title="Using the build manager"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="server.html" title="Data Server Setup"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Nornir 0.9 documentation</a> &raquo;</li>
+          <li><a href="toctree.html" accesskey="U">Installation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="running-on-a-cluster">
+<h1>Running on a Cluster<a class="headerlink" href="#running-on-a-cluster" title="Permalink to this headline">¶</a></h1>
+<p>Nornir uses parallel python to delegate work to other computers when possible.  This can dramatically speed up the build process.</p>
+<div class="section" id="requirements">
+<h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li>Each machine should be running the same version of Nornir and external tools. In particular match versions of Image Magick since bugs/changes have effected color handling in the past.</li>
+<li>The build should be targeting a network drive accessible to all machines on the cluster</li>
+<li>The firewall must be configured to allow Parallel Python traffic.</li>
+</ol>
+</div>
+<div class="section" id="joining-the-cluster">
+<h2>Joining the cluster<a class="headerlink" href="#joining-the-cluster" title="Permalink to this headline">¶</a></h2>
+<p>To make a machine eligible to receive nornir cluster job one simply runs the <cite>startserver.cmd</cite> file located in the python scripts directory after install.</p>
+</div>
+<div class="section" id="troubleshooting">
+<h2>Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permalink to this headline">¶</a></h2>
+<p>At this time error handling is not robust for jobs delegated to the cluster.  If a cluster job fails an exception is sent back to the caller which is visible to the user.  The best approach is to remove machines from the cluster by closing the console running the startserver command.  Run the job without the cluster.  If it works then add one machine at a time until the faulting machine is isolated.</p>
+<p>A common cause of errors is for a cluster machine to drop a drive mapping.  All jobs sent to that machine complete instantly.  So the majority of jobs complete on the machine but are not actually completed.</p>
+<p>Another issue we&#8217;ve seen is for a machine to use a different version of Image Magick which handle colors differently.  This results in different shading across tiles in a mosaic depending on which machine in the cluster took the job.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Running on a Cluster</a><ul>
+<li><a class="reference internal" href="#requirements">Requirements</a></li>
+<li><a class="reference internal" href="#joining-the-cluster">Joining the cluster</a></li>
+<li><a class="reference internal" href="#troubleshooting">Troubleshooting</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="server.html"
+                        title="previous chapter">Data Server Setup</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../usage/buildmanager.html"
+                        title="next chapter">Using the build manager</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/installation/cluster.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../usage/buildmanager.html" title="Using the build manager"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="server.html" title="Data Server Setup"
+             >previous</a> |</li>
+        <li><a href="../index.html">Nornir 0.9 documentation</a> &raquo;</li>
+          <li><a href="toctree.html" >Installation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, James Anderson.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.
+    </div>
+  </body>
+</html>

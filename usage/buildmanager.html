@@ -1,0 +1,984 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Using the build manager &mdash; Nornir 0.9 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.9',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Nornir 0.9 documentation" href="../index.html" />
+    <link rel="next" title="Packages" href="../packages/packages.html" />
+    <link rel="prev" title="Running on a Cluster" href="../installation/cluster.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../packages/packages.html" title="Packages"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../installation/cluster.html" title="Running on a Cluster"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Nornir 0.9 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="using-the-build-manager">
+<h1>Using the build manager<a class="headerlink" href="#using-the-build-manager" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="importing-data">
+<h2>Importing data<a class="headerlink" href="#importing-data" title="Permalink to this headline">¶</a></h2>
+<p>The first command for any Nornir volume:</p>
+<p><tt class="docutils literal"><span class="pre">nornir-build</span> <span class="pre">-volume</span> <span class="pre">&lt;volumepath&gt;</span> <span class="pre">-input</span> <span class="pre">&lt;inputpath&gt;</span></tt></p>
+<p>For example <cite>nornir-build -volume Y:/Volumes/RC2 -input Y:/Captures/RC2/</cite> will instruct Nornir to check the &lt;i&gt;Y:/Captures/RC2/&lt;/i&gt; directory for sections and import any that it can find into the volume stored in &lt;i&gt;Y:/Volumes/RC2&lt;/i&gt;</p>
+<p>The import command extends volumes non-destructively provided different sections are not assigned the same number. Import can be run repeatedly as now sections become available.</p>
+<div class="section" id="organizing-data-for-import">
+<h3>Organizing data for import<a class="headerlink" href="#organizing-data-for-import" title="Permalink to this headline">¶</a></h3>
+<p>Nornir needs the data to be laid out in a predictable fashion.  For random reasons &lt;b&gt;no spaces are allowed in nornir folder names!&lt;/b&gt;.</p>
+<p>The convention nornir uses is for a directory to exist for the volume with a numbered subdirectory for each mosaic.  The directory name should contain the section number, and optionally an underscore followed by the name of the section.</p>
+<p><tt class="docutils literal"><span class="pre">&lt;experimentfolder&gt;/&lt;section#&gt;_[sectionname]</span></tt></p>
+<p>Sometimes it is just useful to organize multiple mosaics into a single volume even though they aren&#8217;t a 3D volume.  In this case just invent different section numbers for each capture. For example lets say I capture three mosaics in SerialEM (which produces an .idoc meta-data file) for Bob&#8217;s eggplant and he had some ID #&#8217;s he wants to make sure get carried along with the data.</p>
+<ul class="simple">
+<li>Bob<ul>
+<li>0001_EggID4567<ul>
+<li>capture.idoc</li>
+<li>001.tif</li>
+<li>002.tif</li>
+<li>...</li>
+<li>1245.tif</li>
+</ul>
+</li>
+<li>0002_EggID7645<ul>
+<li>...</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>The result will two sections named &#8220;EggID4567&#8221; and &#8220;EggID7645&#8221; respectively.</p>
+</div>
+<div class="section" id="notes">
+<h3>Notes<a class="headerlink" href="#notes" title="Permalink to this headline">¶</a></h3>
+<p>Often we want to carry more data forward.  The existing importers extract a lot of scope settings from the meta-data files. If you want to record additional data, for example the box Bob&#8217;s samples are stored in, this can be put into a notes.txt file and saved in the 0001_EggID4567.  The file will copied along with the section.</p>
+<ul class="simple">
+<li>Bob<ul>
+<li>0001_EggID4567<ul>
+<li>capture.idoc</li>
+<li>...</li>
+<li>Notes.txt</li>
+</ul>
+</li>
+<li>0002_EggID7645</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="extending-the-importer">
+<h3>Extending the importer<a class="headerlink" href="#extending-the-importer" title="Permalink to this headline">¶</a></h3>
+<p>Nornir has an .xml file mapping extensions to importers.  It examines each directory for extensions and if the extensions are found it will attempt to load the python module specified in the xml file and pass it the directory containing the files with matching extensions.</p>
+</div>
+</div>
+<div class="section" id="pipelines">
+<h2>Pipelines<a class="headerlink" href="#pipelines" title="Permalink to this headline">¶</a></h2>
+<p>Nornir defines different pipelines that manipulate the volume.  Pipelines are defined in a pipeline.xml file and can be edited by advanced users.</p>
+<p>Builds tend to have many steps in common.  The Marc lab builds TEM images with this pipeline:</p>
+<ol class="arabic simple">
+<li>Prune</li>
+<li>AdjustContrast</li>
+<li>Mosaic</li>
+<li>Assemble</li>
+<li>MosaicReport</li>
+<li>CreateBlobFilter</li>
+<li>AlignSections -Downsample 32</li>
+<li>RefineSectionAlignment -Downsample 32</li>
+<li>RefineSectionAlignment -Downsample 32 16</li>
+<li>SliceToVolume</li>
+<li>ScaleVolumeTransform 16 -&gt; 1</li>
+</ol>
+<p>Sample batch files can be found in the scripts directory, which is copied to the python scripts directory at setup time.  TEMPrepare, TEMBuildMosaic, and TEMAlign show the commands used to build the RC2 TEM volume at the Marc lab.</p>
+<span class="target" id="module-nornir_buildmanager"></span><span class="target" id="module-nornir_buildmanager.build"></span><div class="section" id="common-build-options">
+<h3>Common build options<a class="headerlink" href="#common-build-options" title="Permalink to this headline">¶</a></h3>
+<p>Options available to all build commands.  Specific pipelines may extend the argument list.</p>
+<pre class="literal-block">
+usage: nornir_build [-h] -volume VOLUMEPATH [-input INPUTPATH] [-update]
+                    [-importmapxml IMPORTMAPXMLPATH]
+                    [-pipelinexml PIPELINEXMLPATH]
+                    [-pipeline PIPELINENAMES [PIPELINENAMES ...]] [-debug]
+                    [-verbose] [-normalpriority]
+
+</pre>
+<dl class="docutils">
+<dt>Options:</dt>
+<dd><table class="first last docutils option-list" frame="void" rules="none">
+<col class="option" />
+<col class="description" />
+<tbody valign="top">
+<tr><td class="option-group">
+<kbd><span class="option">-volume</span></kbd></td>
+<td>The path to the volume</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">-input</span></kbd></td>
+<td>The path of data to import, if any</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">-update=False</span></kbd></td>
+<td>If directories have been copied directly into the volume this flag is required to detect them</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">-importmapxml=Importers.xml</span></kbd></td>
+</tr>
+<tr><td>&nbsp;</td><td>The importer XML file to use</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">-pipelinexml=Pipelines.xml</span></kbd></td>
+</tr>
+<tr><td>&nbsp;</td><td>The path to the xml file containing the pipeline XML file</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">-pipeline</span></kbd></td>
+<td>The names of the pipeline to use</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">-debug=False</span></kbd></td>
+<td>If true any exceptions raised by pipelines are not handled.</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">-verbose=False</span></kbd></td>
+<td>Provide additional output</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">-normalpriority=False</span>, <span class="option">-np=False</span></kbd></td>
+</tr>
+<tr><td>&nbsp;</td><td>Run the build without trying to lower the priority.  Faster builds but the machine may be less responsive.</td></tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</div>
+<div class="section" id="id1">
+<h3>Pipelines<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>_Note_: Certain arguments support regular expressions.  See the python <a class="reference external" href="http://docs.python.org/2.7/library/re.html#module-re" title="(in Python v2.7)"><tt class="xref py py-mod docutils literal"><span class="pre">re</span></tt></a> module for instructions on how to construct appropriate regular expressions.</p>
+<span class="target" id="module-nornir_buildmanager.config.sphinxdocs"></span><div class="section" id="prune">
+<h4>Prune<a class="headerlink" href="#prune" title="Permalink to this headline">¶</a></h4>
+<blockquote>
+<div><p>Removes tiles without enough features for proper alignment.</p>
+<pre class="literal-block">
+usage: nornir_build -pipeline TEMPrepare [-h] [-Channels CHANNELSREGEX]
+                                         -Threshold PRUNETHRESHOLD
+                                         [-InputFilter INPUTFILTER]
+                                         [-Downsample DOWNSAMPLE]
+                                         [-InputTransform INPUTTRANSFORM]
+                                         [-OutputTransform OUTPUTTRANSFORM]
+                                         [-overlap OVERLAP]
+
+</pre>
+<dl class="docutils">
+<dt>Options:</dt>
+<dd><table class="first last docutils option-list" frame="void" rules="none">
+<col class="option" />
+<col class="description" />
+<tbody valign="top">
+<tr><td class="option-group">
+<kbd><span class="option">-Channels=*</span></kbd></td>
+<td>Regular expression describing channels to include, * processes all channels</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">-Threshold=0</span></kbd></td>
+<td>Texture complexity threshold</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">-InputFilter=Raw8</span></kbd></td>
+</tr>
+<tr><td>&nbsp;</td><td>Filter to calculate complexity upon</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">-Downsample=1</span></kbd></td>
+<td>Tiles are downsampled by this factor before being scored</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">-InputTransform=Stage</span></kbd></td>
+</tr>
+<tr><td>&nbsp;</td><td>Mosaic transform to prune.  The transform provides the list of tiles in the mosaic.</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">-OutputTransform=Prune</span></kbd></td>
+</tr>
+<tr><td>&nbsp;</td><td>Name of output transform.  Contains tiles from input transform minus tiles below threshold.</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">-overlap=0.1</span></kbd></td>
+<td>Percentage overlap between tiles, 0.0 to 1,0</td></tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</div></blockquote>
+</div>
+<div class="section" id="shadecorrect">
+<h4>ShadeCorrect<a class="headerlink" href="#shadecorrect" title="Permalink to this headline">¶</a></h4>
+<blockquote>
+<div><p>Brightfield microscopy shading correction.  Uses the max tile intensity across all tiles to determine the shading gradient.  Produces an inverted output filter with the shading subtracted.</p>
+<pre class="literal-block">
+usage: nornir_build -pipeline ShadeCorrect [-h] [-Channels CHANNELSREGEX]
+                                           [-Filters FILTERSREGEX]
+                                           [-OutputFilter OUTPUTFILTER]
+                                           -Correction {brightfield,darkfield}
+
+</pre>
+<dl class="docutils">
+<dt>Options:</dt>
+<dd><table class="first last docutils option-list" frame="void" rules="none">
+<col class="option" />
+<col class="description" />
+<tbody valign="top">
+<tr><td class="option-group">
+<kbd><span class="option">-Channels=*</span></kbd></td>
+<td>Regular expression describing channels to include, * processes all channels</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">-Filters=(?![M|m]ask)</span></kbd></td>
+</tr>
+<tr><td>&nbsp;</td><td>Regular expression describing filters to include, * processes all filters</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">-OutputFilter=ShadingCorrected</span></kbd></td>
+</tr>
+<tr><td>&nbsp;</td><td>Prefix added to output filters</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">-Correction=brightfield</span></kbd></td>
+</tr>
+<tr><td>&nbsp;</td><td>Brightfield images have a light background with darker features.  Darkfield images have a dark background with light features.</td></tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</div></blockquote>
+</div>
+<div class="section" id="adjustcontrast">
+<h4>AdjustContrast<a class="headerlink" href="#adjustcontrast" title="Permalink to this headline">¶</a></h4>
+<blockquote>
+<div><p>Creates a new filter with adjusted contrast.  The cutoffs can be adjusted within the meta-data by altering the AutoLevelHint element of the input filters volume.xml meta-data file.</p>
+<pre class="literal-block">
+usage: nornir_build -pipeline AdjustContrast [-h] [-Channels CHANNELSREGEX]
+                                             [-Gamma GAMMA]
+                                             [-MinCutoff MINCUTOFF]
+                                             [-MaxCutoff MAXCUTOFF]
+                                             -InputFilter INPUTFILTER
+                                             [-OutputFilter OUTPUTFILTER]
+                                             -InputTransform INPUTTRANSFORM
+
+</pre>
+<dl class="docutils">
+<dt>Options:</dt>
+<dd><table class="first last docutils option-list" frame="void" rules="none">
+<col class="option" />
+<col class="description" />
+<tbody valign="top">
+<tr><td class="option-group">
+<kbd><span class="option">-Channels=*</span></kbd></td>
+<td>Regular expression describing channels to include, * processes all channels</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">-Gamma</span></kbd></td>
+<td>Gamma value for intensity auto-level</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">-MinCutoff=0.1</span></kbd></td>
+<td>Min pixel intensity cutoff as a percentage, 0 to 100</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">-MaxCutoff=0.5</span></kbd></td>
+<td>Max pixel intensity cutoff as a percentage, 0 to 100. Specifying &#8216;1&#8217; puts the cutoff at 99% of the maximum pixel intensity value.</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">-InputFilter=Raw8</span></kbd></td>
+</tr>
+<tr><td>&nbsp;</td><td>Filter to draw images from</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">-OutputFilter=Leveled</span></kbd></td>
+</tr>
+<tr><td>&nbsp;</td><td>Filter to draw images from</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">-InputTransform=Prune</span></kbd></td>
+</tr>
+<tr><td>&nbsp;</td><td>Mosaic transform to prune.  The transform provides the list of tiles in the mosaic.</td></tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</div></blockquote>
+</div>
+<div class="section" id="mosaic">
+<h4>Mosaic<a class="headerlink" href="#mosaic" title="Permalink to this headline">¶</a></h4>
+<blockquote>
+<div><p>Aligns tiles of a filter into a single mosaic.  Produces an assembled mosaic image.</p>
+<pre class="literal-block">
+usage: nornir_build -pipeline Mosaic [-h] [-Channels CHANNELSREGEX]
+                                     [-RegistrationDownsample DOWNSAMPLE]
+                                     [-MaxOffset MAXOFFSET] -InputFilter
+                                     INPUTFILTER
+                                     [-InputTransform INPUTTRANSFORMNAME]
+                                     [-OutputTransform OUTPUTTRANSFORMNAME]
+
+</pre>
+<dl class="docutils">
+<dt>Options:</dt>
+<dd><table class="first last docutils option-list" frame="void" rules="none">
+<col class="option" />
+<col class="description" />
+<tbody valign="top">
+<tr><td class="option-group">
+<kbd><span class="option">-Channels=*</span></kbd></td>
+<td>Regular expression describing channels to include, * processes all channels</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">-RegistrationDownsample=4</span></kbd></td>
+</tr>
+<tr><td>&nbsp;</td><td>Downsample level to use for ir-tools</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">-MaxOffset=0.5</span></kbd></td>
+<td>Comma seperated list of downsample levels used for assembling output images</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">-InputFilter=Raw8</span></kbd></td>
+</tr>
+<tr><td>&nbsp;</td><td>Filter to use for registration</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">-InputTransform=Prune</span></kbd></td>
+</tr>
+<tr><td>&nbsp;</td><td>Name of the input transform</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">-OutputTransform=Grid</span></kbd></td>
+</tr>
+<tr><td>&nbsp;</td><td>Name of output transform.</td></tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</div></blockquote>
+</div>
+<div class="section" id="assemble">
+<h4>Assemble<a class="headerlink" href="#assemble" title="Permalink to this headline">¶</a></h4>
+<blockquote>
+<div><p>Creates an assembled image from a transform and filter. Creates a new channel for output.</p>
+<pre class="literal-block">
+usage: nornir_build -pipeline Assemble [-h] [-Downsample LEVELS]
+                                       [-NoInterlace] [-Channels CHANNELREGEX]
+                                       [-ChannelPrefix OUTPUTCHANNELPREFIX]
+                                       [-Filters FILTERREGEX]
+                                       [-Output OUTPUTPATH]
+                                       [-Transform TRANSFORMNAME]
+
+</pre>
+<dl class="docutils">
+<dt>Options:</dt>
+<dd><table class="first last docutils option-list" frame="void" rules="none">
+<col class="option" />
+<col class="description" />
+<tbody valign="top">
+<tr><td class="option-group">
+<kbd><span class="option">-Downsample=1</span></kbd></td>
+<td>Comma seperated list of downsample levels for assembling images.  If output is desired only one downsample level can be used.</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">-NoInterlace=True</span></kbd></td>
+</tr>
+<tr><td>&nbsp;</td><td>Setting this flag skips the interlace step after assemble.  Interlaced images load faster on web pages, but are larger than non-interlaced images.</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">-Channels=*</span></kbd></td>
+<td>Regular expression describing channels to be assembled</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">-ChannelPrefix=</span></kbd></td>
+</tr>
+<tr><td>&nbsp;</td><td>Create a new channel for the output with this prefix and the name of the input.</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">-Filters=(?![M|m]ask)</span></kbd></td>
+</tr>
+<tr><td>&nbsp;</td><td>Regular expression describing filters to be assembled</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">-Output</span></kbd></td>
+<td>Directory to move assembled images to</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">-Transform=Grid</span></kbd></td>
+</tr>
+<tr><td>&nbsp;</td><td>Directory to move assembled images to</td></tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</div></blockquote>
+</div>
+<div class="section" id="mosaicreport">
+<h4>MosaicReport<a class="headerlink" href="#mosaicreport" title="Permalink to this headline">¶</a></h4>
+<blockquote>
+<div><p>Generate a web page summarizing the output of 2D section mosaics.  Includes prune scores, contrast histograms, and assembled images if any.</p>
+<pre class="literal-block">
+usage: nornir_build -pipeline MosaicReport [-h] [-PruneFilter PRUNEFILTER]
+                                           [-ContrastFilter CONTRASTFILTER]
+                                           [-AssembleFilter ASSEMBLEFILTER]
+                                           [-AssembleDownsample ASSEMBLEDOWNSAMPLE]
+
+</pre>
+<dl class="docutils">
+<dt>Options:</dt>
+<dd><table class="first last docutils option-list" frame="void" rules="none">
+<col class="option" />
+<col class="description" />
+<tbody valign="top">
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">-PruneFilter=Raw8</span></kbd></td>
+</tr>
+<tr><td>&nbsp;</td><td>Input filter passed to Prune pipeline</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">-ContrastFilter=Raw8</span></kbd></td>
+</tr>
+<tr><td>&nbsp;</td><td>Input filter passed to Adjust Contrast pipeline</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">-AssembleFilter=Raw8</span></kbd></td>
+</tr>
+<tr><td>&nbsp;</td><td>Input filter passed to Assemble or Mosaic pipeline</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">-AssembleDownsample=1</span></kbd></td>
+</tr>
+<tr><td>&nbsp;</td><td>Downsample level to build assembled image thumbnails from</td></tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</div></blockquote>
+</div>
+<div class="section" id="stosreport">
+<h4>StosReport<a class="headerlink" href="#stosreport" title="Permalink to this headline">¶</a></h4>
+<blockquote>
+<div><p>Generate a web page containing a summary of the alignments between sections in a 3D volume</p>
+<pre class="literal-block">
+usage: nornir_build -pipeline StosReport [-h] -StosGroup STOSGROUP
+
+</pre>
+<dl class="docutils">
+<dt>Options:</dt>
+<dd><table class="first last docutils option-list" frame="void" rules="none">
+<col class="option" />
+<col class="description" />
+<tbody valign="top">
+<tr><td class="option-group">
+<kbd><span class="option">-StosGroup</span></kbd></td>
+<td>Stos group to pull images from</td></tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</div></blockquote>
+</div>
+<div class="section" id="createvikingxml">
+<h4>CreateVikingXML<a class="headerlink" href="#createvikingxml" title="Permalink to this headline">¶</a></h4>
+<blockquote>
+<div><p>Create a vikingxml file for use in Viking</p>
+<pre class="literal-block">
+usage: nornir_build -pipeline CreateVikingXML [-h] -StosGroup STOSGROUP
+                                              -StosMap STOSMAP [-Host HOST]
+
+</pre>
+<dl class="docutils">
+<dt>Options:</dt>
+<dd><table class="first last docutils option-list" frame="void" rules="none">
+<col class="option" />
+<col class="description" />
+<tbody valign="top">
+<tr><td class="option-group">
+<kbd><span class="option">-StosGroup</span></kbd></td>
+<td>Stos group to pull images from</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">-StosMap</span></kbd></td>
+<td>Slice-to-slice mapping of transforms</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">-Host</span></kbd></td>
+<td>Url of volume, overrides the about.xml settings</td></tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</div></blockquote>
+</div>
+<div class="section" id="createblobfilter">
+<h4>CreateBlobFilter<a class="headerlink" href="#createblobfilter" title="Permalink to this headline">¶</a></h4>
+<blockquote>
+<div><p>Create a blob filter from an input filter.  Blobbing can make brute slice-to-slice alignment more reliable for downsampled mosaics with fine textures.</p>
+<pre class="literal-block">
+usage: nornir_build -pipeline CreateBlobFilter [-h] [-Channels CHANNELREGEX]
+                                               -InputFilter INPUTFILTER
+                                               [-Levels BLOBDOWNSAMPLELEVELS]
+                                               [-Radius BLOBRADIUS]
+                                               [-Median BLOBMEDIAN]
+                                               [-Max BLOBMAX]
+                                               [-OutputFilter OUTPUTFILTERNAME]
+
+</pre>
+<dl class="docutils">
+<dt>Options:</dt>
+<dd><table class="first last docutils option-list" frame="void" rules="none">
+<col class="option" />
+<col class="description" />
+<tbody valign="top">
+<tr><td class="option-group">
+<kbd><span class="option">-Channels=*</span></kbd></td>
+<td>Regular expression describing channels to be assembled</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">-InputFilter=Leveled</span></kbd></td>
+</tr>
+<tr><td>&nbsp;</td><td>Name of filter to create blob filter for</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">-Levels=1</span></kbd></td>
+<td>Downsample levels to be blobbed</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">-Radius=9</span></kbd></td>
+<td>Radius to calculate variance within</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">-Median=7</span></kbd></td>
+<td>Median filter radius for input</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">-Max=3</span></kbd></td>
+<td>Max variance before cropping</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">-OutputFilter=Blob</span></kbd></td>
+</tr>
+<tr><td>&nbsp;</td><td>Prefix added to created filters</td></tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</div></blockquote>
+</div>
+<div class="section" id="alignsections">
+<h4>AlignSections<a class="headerlink" href="#alignsections" title="Permalink to this headline">¶</a></h4>
+<blockquote>
+<div><p>Performs slice to slice alignment from scratch to produce an initial 3D volume.  After alignment the best alignment results are selected to create a final stosmap.</p>
+<pre class="literal-block">
+usage: nornir_build -pipeline AlignSections [-h] [-Center CENTER]
+                                            [-NumAdjacentSections NUMADJACENTSECTIONS]
+                                            [-Channels CHANNELSREGEX]
+                                            [-Filters FILTERSREGEX]
+                                            [-StosUseMasks USEMASKS]
+                                            -Downsample STOSBRUTEDOWNSAMPLE
+                                            [-GeneratedStosMap GENERATEDSTOSMAP]
+                                            [-OutputStosMap OUTPUTSTOSMAP]
+
+</pre>
+<dl class="docutils">
+<dt>Options:</dt>
+<dd><table class="first last docutils option-list" frame="void" rules="none">
+<col class="option" />
+<col class="description" />
+<tbody valign="top">
+<tr><td class="option-group">
+<kbd><span class="option">-Center</span></kbd></td>
+<td>Center section of the volume.  Defaults to center if unspecified.  The first run center is saved in meta-data and re-used on later runs.</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">-NumAdjacentSections=1</span></kbd></td>
+</tr>
+<tr><td>&nbsp;</td><td>Number of adjacent sections to attempt registration with.</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">-Channels=*</span></kbd></td>
+<td>Regular expression describing channels to be aligned</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">-Filters=(?![M|m]ask)</span></kbd></td>
+</tr>
+<tr><td>&nbsp;</td><td>Regular expression describing filters to be aligned</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">-StosUseMasks=True</span></kbd></td>
+</tr>
+<tr><td>&nbsp;</td><td>Use masks for images if they are available.  Masked areas are replaced with random noise for alignment purposes.</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">-Downsample=1</span></kbd></td>
+<td>Amount to downsample input images before attempting alignment.  Images are padded to the next power of two for the FFT.  Large images, roughly greater than 2048x2048, can be very slow.</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">-GeneratedStosMap=PotentialRegistrationChain</span></kbd></td>
+</tr>
+<tr><td>&nbsp;</td><td>Name assigned to generated stos map.</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">-OutputStosMap=FinalStosMap</span></kbd></td>
+</tr>
+<tr><td>&nbsp;</td><td>Name assigned to generated stos map.</td></tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</div></blockquote>
+</div>
+<div class="section" id="refinesectionalignment">
+<h4>RefineSectionAlignment<a class="headerlink" href="#refinesectionalignment" title="Permalink to this headline">¶</a></h4>
+<blockquote>
+<div><p>Refines slice-to-slice alignment at the given downsample level.  This pipeline is often used iteratively at higher and higher resolutions to improve registration quality.</p>
+<pre class="literal-block">
+usage: nornir_build -pipeline RefineSectionAlignment [-h]
+                                                     [-SectionMap STOSMAP]
+                                                     [-InputGroup INPUTGROUP]
+                                                     -InputDownsample
+                                                     INPUTDOWNSAMPLE
+                                                     [-OutputGroup OUTPUTGROUP]
+                                                     -OutputDownsample
+                                                     OUTPUTDOWNSAMPLE
+                                                     [-Filters FILTERSREGEX]
+                                                     [-StosUseMasks USEMASKS]
+
+</pre>
+<dl class="docutils">
+<dt>Options:</dt>
+<dd><table class="first last docutils option-list" frame="void" rules="none">
+<col class="option" />
+<col class="description" />
+<tbody valign="top">
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">-SectionMap=FinalStosMap</span></kbd></td>
+</tr>
+<tr><td>&nbsp;</td><td>Map describing which sections register to each other</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">-InputGroup=StosBrute</span></kbd></td>
+</tr>
+<tr><td>&nbsp;</td><td>Map describing which sections register to each other</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">-InputDownsample</span></kbd></td>
+</tr>
+<tr><td>&nbsp;</td><td>Downsample level to use for input</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">-OutputGroup=StosGrid</span></kbd></td>
+</tr>
+<tr><td>&nbsp;</td><td>Name of output group</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">-OutputDownsample</span></kbd></td>
+</tr>
+<tr><td>&nbsp;</td><td>Downsample level to use for refinement</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">-Filters=(?![M|m]ask)</span></kbd></td>
+</tr>
+<tr><td>&nbsp;</td><td>Regular expression describing filters to be aligned</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">-StosUseMasks=True</span></kbd></td>
+</tr>
+<tr><td>&nbsp;</td><td>Image set to use as mask</td></tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</div></blockquote>
+</div>
+<div class="section" id="slicetovolume">
+<h4>SliceToVolume<a class="headerlink" href="#slicetovolume" title="Permalink to this headline">¶</a></h4>
+<blockquote>
+<div><p>Created a group of slice-to-volume transforms from a group of slice-to-slice transforms</p>
+<pre class="literal-block">
+usage: nornir_build -pipeline SliceToVolume [-h]
+                                            [-InputDownsample STOVDOWNSAMPLE]
+                                            -InputGroup STOVINPUTGROUP
+                                            [-OutputGroup STOVOUTPUTGROUPNAME]
+                                            [-InputMap INPUTMAP]
+
+</pre>
+<dl class="docutils">
+<dt>Options:</dt>
+<dd><table class="first last docutils option-list" frame="void" rules="none">
+<col class="option" />
+<col class="description" />
+<tbody valign="top">
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">-InputDownsample=16</span></kbd></td>
+</tr>
+<tr><td>&nbsp;</td><td>Downsample level to use for SliceToVolume</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">-InputGroup=StosGrid</span></kbd></td>
+</tr>
+<tr><td>&nbsp;</td><td>Map describing which sections register to each other</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">-OutputGroup=SliceToVolume</span></kbd></td>
+</tr>
+<tr><td>&nbsp;</td><td>Name of output group</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">-InputMap=FinalStosMap</span></kbd></td>
+</tr>
+<tr><td>&nbsp;</td><td>Name of output group</td></tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</div></blockquote>
+</div>
+<div class="section" id="scalevolumetransforms">
+<h4>ScaleVolumeTransforms<a class="headerlink" href="#scalevolumetransforms" title="Permalink to this headline">¶</a></h4>
+<blockquote>
+<div><p>Scales a stos group to use a different downsample level.  Useful for producing full-resolution output after generating transforms using downsampled images.</p>
+<pre class="literal-block">
+usage: nornir_build -pipeline ScaleVolumeTransforms [-h]
+                                                    [-InputGroup SCALEGROUPNAME]
+                                                    -InputDownsample
+                                                    SCALEINPUTDOWNSAMPLE
+                                                    [-OutputDownsample SCALEOUTPUTDOWNSAMPLE]
+
+</pre>
+<dl class="docutils">
+<dt>Options:</dt>
+<dd><table class="first last docutils option-list" frame="void" rules="none">
+<col class="option" />
+<col class="description" />
+<tbody valign="top">
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">-InputGroup=SliceToVolume</span></kbd></td>
+</tr>
+<tr><td>&nbsp;</td><td>Name of stos group to scale</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">-InputDownsample</span></kbd></td>
+</tr>
+<tr><td>&nbsp;</td><td>Downsample level of input stosgroup</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">-OutputDownsample=1</span></kbd></td>
+</tr>
+<tr><td>&nbsp;</td><td>Downsample level of output</td></tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</div></blockquote>
+</div>
+<div class="section" id="volumeimage">
+<h4>VolumeImage<a class="headerlink" href="#volumeimage" title="Permalink to this headline">¶</a></h4>
+<blockquote>
+<div><p>Produces an assembled image for transforms in a stos group.  If the transforms are slice-to-volume transforms the output should be registered into a volume.  Note that using this function requires assembled images to exist at full resolution.  If these do not exist see the MosaicToVolume pipeline.</p>
+<pre class="literal-block">
+usage: nornir_build -pipeline VolumeImage [-h]
+                                          [-InputGroup VOLUMEIMAGEGROUPNAME]
+                                          [-InputDownsample VOLUMEIMAGEDOWNSAMPLE]
+
+</pre>
+<dl class="docutils">
+<dt>Options:</dt>
+<dd><table class="first last docutils option-list" frame="void" rules="none">
+<col class="option" />
+<col class="description" />
+<tbody valign="top">
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">-InputGroup=SliceToVolume</span></kbd></td>
+</tr>
+<tr><td>&nbsp;</td><td>Name of stos group to create scaled version of, default = SliceToVolume</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">-InputDownsample=1</span></kbd></td>
+</tr>
+<tr><td>&nbsp;</td><td>Downsample level of input stosgroup, default = 1</td></tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</div></blockquote>
+</div>
+<div class="section" id="mosaictovolume">
+<h4>MosaicToVolume<a class="headerlink" href="#mosaictovolume" title="Permalink to this headline">¶</a></h4>
+<blockquote>
+<div><p>Used after slice to volume.  Creates new mosaic transforms that map tiles directly into the volume space.  This is done by passing the mosaic transform through a slice-to-volume transformation.  Assemble can then be used to produce volume registered images.</p>
+<pre class="literal-block">
+usage: nornir_build -pipeline MosaicToVolume [-h] [-Channels CHANNELSREGEX]
+                                             [-InputDownsample STOSDOWNSAMPLE]
+                                             [-InputMap INPUTMAPNAME]
+                                             [-InputGroup INPUTSTOSGROUP]
+                                             [-InputTransform INPUTTRANSFORMNAME]
+                                             [-OutputTransform OUTPUTTRANSFORM]
+
+</pre>
+<dl class="docutils">
+<dt>Options:</dt>
+<dd><table class="first last docutils option-list" frame="void" rules="none">
+<col class="option" />
+<col class="description" />
+<tbody valign="top">
+<tr><td class="option-group">
+<kbd><span class="option">-Channels=*</span></kbd></td>
+<td>Regular expression describing channels to be processed</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">-InputDownsample=1</span></kbd></td>
+</tr>
+<tr><td>&nbsp;</td><td>Downsample level of input stosgroup</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">-InputMap=SliceToVolume</span></kbd></td>
+</tr>
+<tr><td>&nbsp;</td><td>Name of output group</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">-InputGroup=SliceToVolume</span></kbd></td>
+</tr>
+<tr><td>&nbsp;</td><td>Name of stos group to pass mosaic transforms through</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">-InputTransform=Grid</span></kbd></td>
+</tr>
+<tr><td>&nbsp;</td><td>Mosaic transform to pass through slice-to-slice transform</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">-OutputTransform=ChannelToVolume</span></kbd></td>
+</tr>
+<tr><td>&nbsp;</td><td>Name of output transform mapping a channel to a volume</td></tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</div></blockquote>
+</div>
+<div class="section" id="exportmosaics">
+<h4>ExportMosaics<a class="headerlink" href="#exportmosaics" title="Permalink to this headline">¶</a></h4>
+<blockquote>
+<div><p>Copies images of sections to an output directory</p>
+<pre class="literal-block">
+usage: nornir_build -pipeline ExportMosaics [-h]
+                                            [-AssembleDownsample ASSEMBLEDOWNSAMPLE]
+                                            [-Filter FILTER]
+                                            [-Output OUTPUTPATH]
+
+</pre>
+<dl class="docutils">
+<dt>Options:</dt>
+<dd><table class="first last docutils option-list" frame="void" rules="none">
+<col class="option" />
+<col class="description" />
+<tbody valign="top">
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">-AssembleDownsample=8</span></kbd></td>
+</tr>
+<tr><td>&nbsp;</td><td>Comma seperated list of downsample levels used for assembling output images</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">-Filter=Leveled</span></kbd></td>
+</tr>
+<tr><td>&nbsp;</td><td>Filter used to build leveled and mosaic images</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">-Output</span></kbd></td>
+<td>Directory to move assembled images to</td></tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</div></blockquote>
+</div>
+<div class="section" id="renamefilter">
+<h4>RenameFilter<a class="headerlink" href="#renamefilter" title="Permalink to this headline">¶</a></h4>
+<blockquote>
+<div><p>Renames a filter</p>
+<pre class="literal-block">
+usage: nornir_build -pipeline RenameFilter [-h] -InputFilter INPUTFILTER
+                                           -OutputFilter NEWNAME
+
+</pre>
+<dl class="docutils">
+<dt>Options:</dt>
+<dd><table class="first last docutils option-list" frame="void" rules="none">
+<col class="option" />
+<col class="description" />
+<tbody valign="top">
+<tr><td class="option-group">
+<kbd><span class="option">-InputFilter</span></kbd></td>
+<td>Old Filter name</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">-OutputFilter</span></kbd></td>
+<td>New Filter name</td></tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</div></blockquote>
+</div>
+</div>
+<span class="target" id="module-nornir_buildmanager.operations"></span></div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Using the build manager</a><ul>
+<li><a class="reference internal" href="#importing-data">Importing data</a><ul>
+<li><a class="reference internal" href="#organizing-data-for-import">Organizing data for import</a></li>
+<li><a class="reference internal" href="#notes">Notes</a></li>
+<li><a class="reference internal" href="#extending-the-importer">Extending the importer</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pipelines">Pipelines</a><ul>
+<li><a class="reference internal" href="#common-build-options">Common build options</a></li>
+<li><a class="reference internal" href="#id1">Pipelines</a><ul>
+<li><a class="reference internal" href="#prune">Prune</a></li>
+<li><a class="reference internal" href="#shadecorrect">ShadeCorrect</a></li>
+<li><a class="reference internal" href="#adjustcontrast">AdjustContrast</a></li>
+<li><a class="reference internal" href="#mosaic">Mosaic</a></li>
+<li><a class="reference internal" href="#assemble">Assemble</a></li>
+<li><a class="reference internal" href="#mosaicreport">MosaicReport</a></li>
+<li><a class="reference internal" href="#stosreport">StosReport</a></li>
+<li><a class="reference internal" href="#createvikingxml">CreateVikingXML</a></li>
+<li><a class="reference internal" href="#createblobfilter">CreateBlobFilter</a></li>
+<li><a class="reference internal" href="#alignsections">AlignSections</a></li>
+<li><a class="reference internal" href="#refinesectionalignment">RefineSectionAlignment</a></li>
+<li><a class="reference internal" href="#slicetovolume">SliceToVolume</a></li>
+<li><a class="reference internal" href="#scalevolumetransforms">ScaleVolumeTransforms</a></li>
+<li><a class="reference internal" href="#volumeimage">VolumeImage</a></li>
+<li><a class="reference internal" href="#mosaictovolume">MosaicToVolume</a></li>
+<li><a class="reference internal" href="#exportmosaics">ExportMosaics</a></li>
+<li><a class="reference internal" href="#renamefilter">RenameFilter</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../installation/cluster.html"
+                        title="previous chapter">Running on a Cluster</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../packages/packages.html"
+                        title="next chapter">Packages</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/usage/buildmanager.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../packages/packages.html" title="Packages"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../installation/cluster.html" title="Running on a Cluster"
+             >previous</a> |</li>
+        <li><a href="../index.html">Nornir 0.9 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, James Anderson.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.
+    </div>
+  </body>
+</html>

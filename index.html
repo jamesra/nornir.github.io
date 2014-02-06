@@ -1,0 +1,182 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Welcome to Nornir’s documentation! &mdash; Nornir 0.9 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.9',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Nornir 0.9 documentation" href="#" />
+    <link rel="next" title="Overview of volume building" href="overview/overview.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="overview/overview.html" title="Overview of volume building"
+             accesskey="N">next</a> |</li>
+        <li><a href="#">Nornir 0.9 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="welcome-to-nornir-s-documentation">
+<h1>Welcome to Nornir&#8217;s documentation!<a class="headerlink" href="#welcome-to-nornir-s-documentation" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="contents">
+<h2>Contents<a class="headerlink" href="#contents" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="overview/overview.html">Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="overview/overview.html#mosaic-registration">Mosaic Registration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="overview/overview.html#slice-to-slice-registration">Slice-To-Slice Registration</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="installation/toctree.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="installation/common.html">Common Install Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation/buildmanager.html">Build Manager Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation/pyre.html">Pyre Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation/server.html">Data Server Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation/cluster.html">Running on a Cluster</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="usage/buildmanager.html">Use</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="usage/buildmanager.html#importing-data">Importing data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/buildmanager.html#pipelines">Pipelines</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="packages/packages.html">Packages</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="packages/nornir_buildmanager.html">Build manager (nornir_buildmanager)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="packages/nornir_imageregistration.html">Image Registration (nornir_imageregistration)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="packages/nornir_pools.html">Pools (nornir_pools)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="packages/nornir_shared.html">Shared (nornir_shared)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">TroubleShooting</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="troubleshooting.html#installation">Installation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="background/background.html">Glossary and Background</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="background/background.html#glossary-of-terms-in-context">Glossary of terms in context</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="about-nornir">
+<h2>About Nornir<a class="headerlink" href="#about-nornir" title="Permalink to this headline">¶</a></h2>
+<p>Nornir&#8217;s mission is to take large sets of overlapping images in 2D and 3D and produce registered (a.k.a. aligned) 3D volumes of any size and scale.</p>
+</div>
+<div class="section" id="history">
+<h2>History<a class="headerlink" href="#history" title="Permalink to this headline">¶</a></h2>
+<p>Nornir evolved from a collaboration between the <a class="reference external" href="http://prometheus.med.utah.edu/~marclab/marclab_09_science-papers.html/">Marc Lab</a> and the <a class="reference external" href="http://www.ucnia.org/">Scientific Computing Institute&#8217;s</a> Tasdizen and Whitaker groups at the University of Utah.  The original tools, known as the <a class="reference external" href="http://www.ucnia.org/download/ncrtoolset/">NCR Toolset</a> were used to construct <a class="reference external" href="http://www.ncbi.nlm.nih.gov/pubmed/21311605/">RC1</a>, a 250um diameter, 33um tall cylinder of rabbit retina at a resoultion of 2.18 nm/pixel.</p>
+<p>Nornir is a work in progress.  It currently supports importing images from transmission electron microscopes running SerialEM (.idoc files), light microscopes running Surveyor (.pmg files), and other volumes represented with a single image per section (.png files).</p>
+</div>
+<div class="section" id="related-tools">
+<h2>Related Tools<a class="headerlink" href="#related-tools" title="Permalink to this headline">¶</a></h2>
+<p>Volume images frequently exceed the reasonable sizes for single images.  <a class="reference external" href="http://connectomes.utah.edu/">Viking</a> is another Marc lab tool for viewing and annotating huge datasets.  Nornir produces volumes that can be viewed using Viking if placed on a web server.</p>
+<p>Analysis of the annotations created by Viking for our existing rabbit connectome and future connectomes is performed by the <a class="reference external" href="https://github.com/jamesra/py-connectome-analysis/wiki">py-connectome-analysis</a> package</p>
+</div>
+</div>
+<div class="section" id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><a class="reference internal" href="genindex.html"><em>Index</em></a></li>
+<li><a class="reference internal" href="py-modindex.html"><em>Module Index</em></a></li>
+<li><a class="reference internal" href="search.html"><em>Search Page</em></a></li>
+</ul>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="#">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Welcome to Nornir&#8217;s documentation!</a><ul>
+<li><a class="reference internal" href="#contents">Contents</a><ul>
+</ul>
+</li>
+<li><a class="reference internal" href="#about-nornir">About Nornir</a></li>
+<li><a class="reference internal" href="#history">History</a></li>
+<li><a class="reference internal" href="#related-tools">Related Tools</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
+</ul>
+
+  <h4>Next topic</h4>
+  <p class="topless"><a href="overview/overview.html"
+                        title="next chapter">Overview of volume building</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/index.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="overview/overview.html" title="Overview of volume building"
+             >next</a> |</li>
+        <li><a href="#">Nornir 0.9 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, James Anderson.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,160 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Pyre Installation &mdash; Nornir 0.9 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.9',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Nornir 0.9 documentation" href="../index.html" />
+    <link rel="up" title="Installation" href="toctree.html" />
+    <link rel="next" title="Data Server Setup" href="server.html" />
+    <link rel="prev" title="Build Manager Installation" href="buildmanager.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="server.html" title="Data Server Setup"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="buildmanager.html" title="Build Manager Installation"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Nornir 0.9 documentation</a> &raquo;</li>
+          <li><a href="toctree.html" accesskey="U">Installation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="pyre-installation">
+<h1>Pyre Installation<a class="headerlink" href="#pyre-installation" title="Permalink to this headline">¶</a></h1>
+<p>Users should begin by following the <em class="xref std std-ref">common</em> installation instructions before proceeding to the Pyre&#8217;s specific instructions below.</p>
+<div class="section" id="python-packages">
+<h2>Python packages<a class="headerlink" href="#python-packages" title="Permalink to this headline">¶</a></h2>
+<p>Use the latest 64-bit version of packages unless otherwise specified</p>
+<ul class="simple">
+<li><a class="reference external" href="http://www.wxpython.org/download.php#stable">WxPython 2.8 unicode or later</a></li>
+<li><a class="reference external" href="http://www.pyglet.org/download.html">Pyglet 1.2alpha1 or later</a>
+The best method of installing Pyglet is calling pip from Python install scripts directory, which is typically _C:Python27scripts_::
+pip install &#8211;upgrade <a class="reference external" href="http://pyglet.googlecode.com/archive/tip.zip">http://pyglet.googlecode.com/archive/tip.zip</a></li>
+<li><a class="reference external" href="http://www.lfd.uci.edu/~gohlke/pythonlibs/#pyopengl">PyOpenGL 3.X</a> can be installed from Gohlke&#8217;s site.  <a class="reference external" href="http://www.lfd.uci.edu/~gohlke/pythonlibs/#pyopengl-accelerate">PyOpenGL Accelerate 3.X</a> is optional, but may increase performance.</li>
+</ul>
+</div>
+<div class="section" id="installing-pyre-package">
+<h2>Installing Pyre package<a class="headerlink" href="#installing-pyre-package" title="Permalink to this headline">¶</a></h2>
+<p>From the Python scripts directory use pip to install pyre directly from github:</p>
+<div class="highlight-python"><pre>pip install git+https://github.com/nornir/nornir-pyre.git</pre>
+</div>
+<p>For reasons uninvestigated Pip can fail to install other nornir packages.  If this occurs one can create an empty directory, clone the repository into it, and use python setup:</p>
+<div class="highlight-python"><pre>git clone https://github.com/nornir/nornir-pyre.git
+python setup.py install</pre>
+</div>
+</div>
+<div class="section" id="launching-pyre">
+<h2>Launching Pyre<a class="headerlink" href="#launching-pyre" title="Permalink to this headline">¶</a></h2>
+<p>Once installed pyre creates a python script for launching pyre and well as some executable shortcuts.  The current practice is to launch from the Python scripts directory:</p>
+<div class="highlight-python"><pre>python start_pyre.py</pre>
+</div>
+<p>If that fails download the source to a directory using <cite>git clone https://github.com/jamesra/nornir-pyre.git</cite> command, change to the directory that command creates, and then run start pyre:</p>
+<div class="highlight-python"><pre>python scripts/start_pyre.py</pre>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Pyre Installation</a><ul>
+<li><a class="reference internal" href="#python-packages">Python packages</a></li>
+<li><a class="reference internal" href="#installing-pyre-package">Installing Pyre package</a></li>
+<li><a class="reference internal" href="#launching-pyre">Launching Pyre</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="buildmanager.html"
+                        title="previous chapter">Build Manager Installation</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="server.html"
+                        title="next chapter">Data Server Setup</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/installation/pyre.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="server.html" title="Data Server Setup"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="buildmanager.html" title="Build Manager Installation"
+             >previous</a> |</li>
+        <li><a href="../index.html">Nornir 0.9 documentation</a> &raquo;</li>
+          <li><a href="toctree.html" >Installation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, James Anderson.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,171 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Common Install Requirements &mdash; Nornir 0.9 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.9',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Nornir 0.9 documentation" href="../index.html" />
+    <link rel="up" title="Installation" href="toctree.html" />
+    <link rel="next" title="Build Manager Installation" href="buildmanager.html" />
+    <link rel="prev" title="Installation" href="toctree.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="buildmanager.html" title="Build Manager Installation"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="toctree.html" title="Installation"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Nornir 0.9 documentation</a> &raquo;</li>
+          <li><a href="toctree.html" accesskey="U">Installation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="common-install-requirements">
+<h1>Common Install Requirements<a class="headerlink" href="#common-install-requirements" title="Permalink to this headline">¶</a></h1>
+<p>All Nornir packages share some common install requirements.  These should be met before attempting installation of any particular package.</p>
+<p>These instructions were written for PC users.  Nornir depends upong the NCR Toolset which latest version has only been compiled for the PC.  Nornir&#8217;s aim is to replace those tools with Python implementations.  At that point Nornir will be platform independent.   Mac users should not have trouble if they have a working Mac Ports installation.</p>
+<div class="section" id="python">
+<h2>Python<a class="headerlink" href="#python" title="Permalink to this headline">¶</a></h2>
+<p><strong>Use the latest 64-bit versions for Python and all other dependencies unless specified otherwise.</strong></p>
+<p>The latest version of 64-bit <a class="reference external" href="http://python.org/">Python 2.7</a>.X (<a class="reference external" href="http://python.org/">http://python.org/</a>) should be installed first followed by these packages:</p>
+<ul class="simple">
+<li><a class="reference external" href="http://www.pip-installer.org/">PIP</a> On windows it may require an <a class="reference external" href="http://windows.microsoft.com/en-us/windows-vista/command-prompt-frequently-asked-questions/">elevated command prompt</a></li>
+<li>setuptools (Should be installed by pip)</li>
+<li>numpy</li>
+<li>scipy</li>
+<li>matplotlib</li>
+</ul>
+<p>Windows users can locate many pre-built installers at the excellent site maintained by <a class="reference external" href="http://www.lfd.uci.edu/~gohlke/pythonlibs/">Christoph Gohlke</a>.  Mac users can utilize mac ports to install many</p>
+</div>
+<div class="section" id="git-client">
+<h2>Git client<a class="headerlink" href="#git-client" title="Permalink to this headline">¶</a></h2>
+<p>Any git client that lives in your system path will do.  git is required by Nornir Python setup scripts.</p>
+<p>A good option is to install git from <cite>git-scm_</cite>.  During installation of the client one _must_ select the option to add git to the windows path</p>
+<img alt="../_images/gitsetup_path.png" src="../_images/gitsetup_path.png" />
+<p>If installed correctly one can open a command prompt, type &#8220;git&#8221;, and have some usage information returned.</p>
+</div>
+<div class="section" id="upgrading-numpy-scipy-matplotlib">
+<h2>Upgrading Numpy, Scipy, Matplotlib<a class="headerlink" href="#upgrading-numpy-scipy-matplotlib" title="Permalink to this headline">¶</a></h2>
+<p>Circa 2013 the PIP installer appears to detect earlier versions of these libraries even if later versions are installed.  This results in downloading and building the libraries which fails if the machine does not have a build environment working for those tools.  It is best to delete old versions of Numpy/Scipy/Matplotlib from the Python27/lib/site-packages directory when upgrading to later versions.</p>
+</div>
+<div class="section" id="optional-test-data">
+<h2>Optional test data<a class="headerlink" href="#optional-test-data" title="Permalink to this headline">¶</a></h2>
+<p>One can test that the installation is functional by downloading the <a class="reference external" href="http://connectomes.utah.edu/software/nornir/nornir-testdata.zip">test data</a>.  This currently 6.7 GB so it is not a quick download.  Extract the data to a folder, for this example I will use C:srcgitnornirtestdata.</p>
+<p>Once downloaded two environment variables must be set.  TESTINPUTPATH and TESTOUTPUTPATH, for one time use this can be done from the command line:</p>
+<div class="highlight-python"><pre>set TESTINPUTPATH=C:\src\git\nornir\testdata
+set TESTOUTPUTPATH=C:\temp</pre>
+</div>
+<p>If one wants to use Viking to examine test volumes after they are built, the TESTHOST environment variable can be set.  You configure your webserver such that the TESTOUTPUTPATH is visible at the URL provided for TESTHOST.</p>
+<blockquote>
+<div>set TESTHOST=http://localhost/NornirTestOutput</div></blockquote>
+<p>From the nornir-buildmanager directory one can now test the installation by typing:</p>
+<div class="highlight-python"><pre>python setup.py test</pre>
+</div>
+<p>This should run all of the nornir tests and report if they were successful.  Test output is visible in the directory specified by TESTOUTPUTPATH.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Common Install Requirements</a><ul>
+<li><a class="reference internal" href="#python">Python</a></li>
+<li><a class="reference internal" href="#git-client">Git client</a></li>
+<li><a class="reference internal" href="#upgrading-numpy-scipy-matplotlib">Upgrading Numpy, Scipy, Matplotlib</a></li>
+<li><a class="reference internal" href="#optional-test-data">Optional test data</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="toctree.html"
+                        title="previous chapter">Installation</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="buildmanager.html"
+                        title="next chapter">Build Manager Installation</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/installation/common.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="buildmanager.html" title="Build Manager Installation"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="toctree.html" title="Installation"
+             >previous</a> |</li>
+        <li><a href="../index.html">Nornir 0.9 documentation</a> &raquo;</li>
+          <li><a href="toctree.html" >Installation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, James Anderson.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.
+    </div>
+  </body>
+</html>
