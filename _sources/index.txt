@@ -16,8 +16,10 @@ Contents
    Installation <installation/toctree>
    Use <usage/buildmanager>
    Packages <packages/packages>
-   TroubleShooting <troubleshooting> 
+   TroubleShooting <troubleshooting>
    Glossary and Background <background/background>
+   
+    
  
 About Nornir
 ------------

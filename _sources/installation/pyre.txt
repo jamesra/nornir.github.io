@@ -2,7 +2,7 @@
 Pyre Installation
 =================
 
-Users should begin by following the :ref:`common` installation instructions before proceeding to the Pyre's specific instructions below.
+Users should begin by following the :ref:`common installation instructions <common>` before proceeding to the Pyre's specific instructions below.
 
 Python packages
 ---------------
@@ -10,9 +10,10 @@ Python packages
 Use the latest 64-bit version of packages unless otherwise specified
 
 * `WxPython 2.8 unicode or later`_
-* `Pyglet 1.2alpha1 or later`_
-  The best method of installing Pyglet is calling pip from Python install scripts directory, which is typically _C:\Python27\scripts_::
-  pip install --upgrade http://pyglet.googlecode.com/archive/tip.zip  
+* `Pyglet 1.2alpha1 or later`_ The best method of installing Pyglet is calling pip from Python install scripts directory, which is typically C:\\Python27\\scripts::
+  
+      pip install --upgrade http://pyglet.googlecode.com/archive/tip.zip
+    
 * `PyOpenGL 3.X`_ can be installed from Gohlke's site.  `PyOpenGL Accelerate 3.X`_ is optional, but may increase performance.
 
 Installing Pyre package
