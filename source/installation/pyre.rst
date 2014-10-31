@@ -38,8 +38,14 @@ Once installed pyre creates a python script for launching pyre and well as some 
 If that fails download the source to a directory using `git clone https://github.com/jamesra/nornir-pyre.git` command, change to the directory that command creates, and then run start pyre::
   
     python scripts/start_pyre.py
+
+Pyre on Mac
+———————————
+
+Pyre requires X11 to be installed to run on the Mac.  ‘XQuartz’_ provides X11.
     
 .. _WxPython 2.8 unicode or later: http://www.wxpython.org/download.php#stable
 .. _Pyglet 1.2alpha1 or later: http://www.pyglet.org/download.html
 .. _PyOpenGL 3.X: http://www.lfd.uci.edu/~gohlke/pythonlibs/#pyopengl
 .. _PyOpenGL Accelerate 3.X: http://www.lfd.uci.edu/~gohlke/pythonlibs/#pyopengl-accelerate
+.. _XQuartz: http://xquartz.macosforge.org/trac
